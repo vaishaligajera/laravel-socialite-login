@@ -6,6 +6,7 @@ use Auth;
 use Exception;
 use Socialite;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class GitHubController extends Controller
 {
@@ -26,7 +27,7 @@ class GitHubController extends Controller
       
                 Auth::login($searchUser);
      
-                return redirect('/dashboard');
+                return redirect('/');
       
             }else{
                 $gitUser = User::create([
@@ -34,7 +35,7 @@ class GitHubController extends Controller
                     'email' => $user->email,
                     'github_id'=> $user->id,
                     'auth_type'=> 'github',
-                    'password' => encrypt('gitpwd059')
+                    'password' => Hash::make('gitpwd059')
                 ]);
      
                 Auth::login($gitUser);
